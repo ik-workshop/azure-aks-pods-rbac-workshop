@@ -2,10 +2,10 @@
 brew "pre-commit"
 # Tool to generate documentation from Terraform modules
 brew "terraform-docs"
-# Improve Terraform's plan output
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
-# ci
+
+brew "azure-cli"
 if OS.mac?
     # Terraform switcher
     brew "tfswitch"

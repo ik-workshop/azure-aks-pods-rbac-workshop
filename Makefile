@@ -19,3 +19,6 @@ changelog: ## Update changelog
 
 release: ## Create release version
 	@semtag final -s minor
+
+tfm-platform: ## Step 1. Deploy base. Networking & Kubernetes
+	@envchain az bin/az.terraform.base.sh apply
