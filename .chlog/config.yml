@@ -2,7 +2,7 @@ style: github
 template: CHANGELOG.tpl.md
 info:
   title: CHANGELOG
-  repository_url: https://todo
+  repository_url: https://github.com/ik-workshop/azure-aks-rbac-workshop.git
 options:
   header:
     pattern: "^(.*)$"
