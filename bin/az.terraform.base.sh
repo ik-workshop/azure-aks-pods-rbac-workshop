@@ -11,40 +11,29 @@ set -euo pipefail
 
 COMMAND=${1:-plan}
 
-# clean_up() {
-#   rm -f .terraform/terraform.tfstate
-#   echo "cleanup..."
-# }
-# trap clean_up EXIT
+clean_up() {
+
+  echo "cleanup..."
+}
+trap clean_up EXIT
 
 STEP="platform"
-STATE_FILE="${STEP}.tfstate"
+STATE_FILE="states/${STEP}.tfstate"
 MODULE="infra/azure/$STEP"
 # TF_VARS="inventory/${STEP}.tfvars"
 
 export TF_VAR_prefix="${PREFIX}"
 export TF_VAR_location="${AZ_LOCATION}"
-# export TF_VAR_target_account_id=${AWS_ACCOUNT_ID}
-# export TF_VAR_states_bucket="${AWS_STATE_BUCKET}"
-# export TF_VAR_dns_domain="${DNS_DOMAIN}"
-# export TF_VAR_target_account_id="${AWS_ACCOUNT_ID}"
-# export TF_VAR_environment="$ENVIRONMENT"
+export TF_VAR_region="${AZ_LOCATION}"
 
 terraform init -reconfigure "${MODULE}"
-# terraform init \
-# -backend-config="bucket=${AWS_STATE_BUCKET}" \
-# -backend-config="workspace_key_prefix=${STEP}" \
-# -backend-config="key=$ENVIRONMENT/${STEP}/${STATE_FILE}" \
-# -backend-config="encrypt=true" \
-# -backend-config="region=${AWS_REGION}" \
-# -backend-config="profile=${AWS_PROFILE}" \
-# -backend=true -get=true \
-# -reconfigure \
-# "${MODULE}"
 
+# TODO: state is hacked. we should have an if/else for state in case of first deployment
 terraform "${COMMAND}" \
 -refresh=true \
+-state="${STATE_FILE}" \
 -state-out="${STATE_FILE}" \
 "${MODULE}"
+
 # -var-file="$TF_VARS" \
-# -refresh=true "${MODULE}"
+

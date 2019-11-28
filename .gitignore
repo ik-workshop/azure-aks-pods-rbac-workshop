@@ -84,3 +84,5 @@ override.tf.json
 # End of https://www.gitignore.io/api/git,code,macos,terraform
 
 *.lock.json
+
+DOCS.md
